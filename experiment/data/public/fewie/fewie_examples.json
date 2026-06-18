@@ -1,0 +1,144 @@
+{
+  "examples": [
+    {
+      "id": "fewie_001",
+      "text": "I ordered the iPhone 15 from Amazon last Tuesday and it arrived broken. The delivery was by FedEx. Contact: support@amazon.com",
+      "entities": [
+        {
+          "text": "iPhone 15",
+          "type": "PRODUCT",
+          "start": 12,
+          "end": 22
+        },
+        {
+          "text": "Amazon",
+          "type": "SELLER",
+          "start": 31,
+          "end": 37
+        },
+        {
+          "text": "FedEx",
+          "type": "CARRIER",
+          "start": 74,
+          "end": 79
+        }
+      ],
+      "relations": [
+        {
+          "type": "SELLER_OF",
+          "head": "Amazon",
+          "tail": "iPhone 15"
+        },
+        {
+          "type": "DELIVERED_BY",
+          "head": "iPhone 15",
+          "tail": "FedEx"
+        }
+      ]
+    },
+    {
+      "id": "fewie_002",
+      "text": "The Bank of China blocked my card after I tried to withdraw from ATM in Hong Kong. Card number ends with 4532. Customer service: 95566",
+      "entities": [
+        {
+          "text": "Bank of China",
+          "type": "BANK",
+          "start": 4,
+          "end": 16
+        },
+        {
+          "text": "Hong Kong",
+          "type": "LOCATION",
+          "start": 54,
+          "end": 63
+        },
+        {
+          "text": "ATM",
+          "type": "DEVICE",
+          "start": 40,
+          "end": 43
+        }
+      ],
+      "relations": [
+        {
+          "type": "BLOCKED_AT",
+          "head": "Bank of China",
+          "tail": "ATM"
+        }
+      ]
+    },
+    {
+      "id": "fewie_003",
+      "text": "Received a call from +86 138 1234 5678 claiming to be from the police. They asked me to transfer money to a safe account immediately.",
+      "entities": [
+        {
+          "text": "+86 138 1234 5678",
+          "type": "PHONE",
+          "start": 16,
+          "end": 32
+        },
+        {
+          "text": "police",
+          "type": "IMPERSONATED_ORG",
+          "start": 43,
+          "end": 49
+        },
+        {
+          "text": "safe account",
+          "type": "SCAM_METHOD",
+          "start": 88,
+          "end": 100
+        }
+      ],
+      "relations": [
+        {
+          "type": "IMPERSONATES",
+          "head": "+86 138 1234 5678",
+          "tail": "police"
+        },
+        {
+          "type": "INDUCES_TRANSFER",
+          "head": "police",
+          "tail": "safe account"
+        }
+      ]
+    },
+    {
+      "id": "fewie_004",
+      "text": "The fake investment app '汇丰理财' disappeared after I deposited 50,000 yuan. The developer email was support@hsbc-invest.com which is not official.",
+      "entities": [
+        {
+          "text": "汇丰理财",
+          "type": "FAKE_APP",
+          "start": 15,
+          "end": 20
+        },
+        {
+          "text": "50,000 yuan",
+          "type": "AMOUNT",
+          "start": 41,
+          "end": 52
+        },
+        {
+          "text": "support@hsbc-invest.com",
+          "type": "FAKE_EMAIL",
+          "start": 69,
+          "end": 91
+        }
+      ],
+      "relations": [
+        {
+          "type": "STOLE_FUNDS",
+          "head": "汇丰理财",
+          "tail": "50,000 yuan"
+        },
+        {
+          "type": "IMPERSONATES",
+          "head": "support@hsbc-invest.com",
+          "tail": "汇丰理财"
+        }
+      ]
+    }
+  ],
+  "count": 4
+}

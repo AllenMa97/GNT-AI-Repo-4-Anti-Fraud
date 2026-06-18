@@ -1,0 +1,8 @@
+{
+  "dataset": "FewIE",
+  "source": "https://github.com/OSU-NLP-Group/FewIE",
+  "task": "Few-shot Information Extraction",
+  "format": "JSON with entity and relation annotations",
+  "note": "SYNTHETIC FALLBACK. Download real data from GitHub.",
+  "citation": "@inproceedings{fewie2023, title={FewIE: A Benchmark for Few-Shot IE}, booktitle={ACL 2023}}"
+}

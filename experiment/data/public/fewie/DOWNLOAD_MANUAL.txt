@@ -1,0 +1,17 @@
+FewIE Dataset - Manual Download Required
+==================================================
+
+Source: https://github.com/OSU-NLP-Group/FewIE
+Paper: FewIE: A Benchmark for Information Extraction on Few-Shot
+       User-Generated Text (ACL 2023)
+
+Download Steps:
+  1. Visit: https://github.com/OSU-NLP-Group/FewIE
+  2. Clone or download the repository
+  3. Copy 'data/' folder contents to this directory
+  4. The data should include JSON files with few-shot IE examples
+
+Task: Few-shot Information Extraction from user-generated text
+  - Entity extraction (PRODUCT, SELLER, CARRIER, etc.)
+  - Relation extraction (SELLER_OF, DELIVERED_BY, etc.)
+  - Especially challenging: short, noisy, informal text

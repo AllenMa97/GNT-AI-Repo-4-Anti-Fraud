@@ -1,0 +1,13 @@
+{
+  "dataset": "CoNLL-2003",
+  "source": "https://www.clips.uantwerpen.be/conll2003/",
+  "format": "NER (4-class: PER, ORG, LOC, MISC)",
+  "language": "English",
+  "splits": {
+    "train": 25,
+    "dev": 3,
+    "test": 8
+  },
+  "note": "SYNTHETIC FALLBACK generated programmatically. Download real data from official site.",
+  "citation": "@inproceedings{tjong-kim-sang-de-meulder-2003, title={Introduction to the CoNLL-2003 Shared Task}, booktitle={CoNLL-2003}}"
+}
