@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAPF: Task-Adaptive Privacy Filtering Framework</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0d1520;
+            color: #e8eaed;
+            min-height: 100vh;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a8c0d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #6b7c93;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        /* Core Concept */
+        .core-concept {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        
+        .concept-card {
+            background: linear-gradient(145deg, #1a2a4a 0%, #0f1a2e 100%);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+        }
+        
+        .concept-card.input .concept-icon {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+        }
+        
+        .concept-card.filter .concept-icon {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+        }
+        
+        .concept-card.output .concept-icon {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        }
+        
+        .concept-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .concept-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        
+        .concept-desc {
+            font-size: 0.9rem;
+            color: #8b9db5;
+            line-height: 1.6;
+        }
+        
+        /* Flow Diagram */
+        .flow-section {
+            background: #0a1119;
+            border-radius: 20px;
+            padding: 48px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #00d4ff;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .section-heading {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 40px;
+        }
+        
+        .pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .pipeline-node {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .node-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .node-circle.raw {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+        }
+        
+        .node-circle.filter {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+        }
+        
+        .node-circle.llm {
+            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+        }
+        
+        .node-circle.output {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            box-shadow: 0 8px 32px rgba(74, 222, 128, 0.3);
+        }
+        
+        .node-label {
+            font-size: 0.8rem;
+            color: #6b7c93;
+        }
+        
+        .node-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .arrow {
+            flex-shrink: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.5), rgba(0, 212, 255, 0.8));
+            position: relative;
+        }
+        
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 6px solid transparent;
+            border-left-color: #00d4ff;
+        }
+        
+        /* SOP-DAG Grid */
+        .dag-section {
+            background: #0a1119;
+            border-radius: 20px;
+            padding: 48px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .dag-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        
+        .phase {
+            background: rgba(26, 42, 74, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .phase-header {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #00d4ff;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        
+        .dag-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .dag-node:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .dag-node.llm {
+            border-left: 3px solid #a78bfa;
+        }
+        
+        .dag-node.rule {
+            border-left: 3px solid #4ade80;
+        }
+        
+        .dag-node.hybrid {
+            border-left: 3px solid #ff9500;
+        }
+        
+        .node-id {
+            font-weight: 600;
+            color: #00d4ff;
+            margin-right: 6px;
+        }
+        
+        .node-type {
+            display: inline-block;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+        
+        .node-type.llm {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
+        }
+        
+        .node-type.rule {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+        }
+        
+        .node-type.hybrid {
+            background: rgba(255, 149, 0, 0.2);
+            color: #ff9500;
+        }
+        
+        /* Metrics */
+        .metrics-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(145deg, #1a2a4a 0%, #0f1a2e 100%);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #4ade80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            font-size: 0.85rem;
+            color: #6b7c93;
+        }
+        
+        .metric-sublabel {
+            font-size: 0.7rem;
+            color: #4b5a6d;
+            margin-top: 4px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-text {
+            font-size: 0.8rem;
+            color: #4b5a6d;
+        }
+        
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: #6b7c93;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+        
+        .legend-dot.llm {
+            background: #a78bfa;
+        }
+        
+        .legend-dot.rule {
+            background: #4ade80;
+        }
+        
+        .legend-dot.hybrid {
+            background: #ff9500;
+        }
+        
+        @media (max-width: 1200px) {
+            .dag-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .core-concept {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">TAPF</h1>
+            <p class="subtitle">Task-Adaptive Privacy Filtering</p>
+        </div>
+        
+        <!-- Core Concept -->
+        <div class="core-concept">
+            <div class="concept-card input">
+                <div class="concept-icon">📥</div>
+                <h3 class="concept-title">Raw Data Input</h3>
+                <p class="concept-desc">Full case records including victim statements, chat logs, transactions, and personal identifiers (PII).</p>
+            </div>
+            <div class="concept-card filter">
+                <div class="concept-icon">⚡</div>
+                <h3 class="concept-title">IM Filtering</h3>
+                <p class="concept-desc">Information Minimization selects only task-relevant fields. Each node receives its minimal sufficient set M<sub>i</sub>.</p>
+            </div>
+            <div class="concept-card output">
+                <div class="concept-icon">📤</div>
+                <h3 class="concept-title">Filtered Output</h3>
+                <p class="concept-desc">Task-specific outputs with privacy preserved. Quality maintained at 97% while reducing exposure by 62%.</p>
+            </div>
+        </div>
+        
+        <!-- Pipeline Flow -->
+        <div class="flow-section">
+            <div class="section-title">Framework</div>
+            <h2 class="section-heading">Information Flow Through TAPF</h2>
+            
+            <div class="pipeline">
+                <div class="pipeline-node">
+                    <div class="node-circle raw">
+                        <span>X</span>
+                    </div>
+                    <div class="node-title">Full Input</div>
+                    <div class="node-label">All Fields</div>
+                </div>
+                
+                <div class="arrow"></div>
+                
+                <div class="pipeline-node">
+                    <div class="node-circle filter">
+                        <span>M<sub>i</sub></span>
+                    </div>
+                    <div class="node-title">IM Filter</div>
+                    <div class="node-label">Task-Adaptive</div>
+                </div>
+                
+                <div class="arrow"></div>
+                
+                <div class="pipeline-node">
+                    <div class="node-circle llm">
+                        <span>LLM</span>
+                    </div>
+                    <div class="node-title">API Call</div>
+                    <div class="node-label">DeepSeek-V4</div>
+                </div>
+                
+                <div class="arrow"></div>
+                
+                <div class="pipeline-node">
+                    <div class="node-circle output">
+                        <span>Y</span>
+                    </div>
+                    <div class="node-title">Task Output</div>
+                    <div class="node-label">Privacy Preserved</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SOP-DAG -->
+        <div class="dag-section">
+            <div class="section-title">Architecture</div>
+            <h2 class="section-heading">Telecom Fraud SOP-DAG: 15 Nodes, 5 Phases</h2>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot llm"></div>
+                    <span>LLM Processing</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot rule"></div>
+                    <span>Rule Engine (Local)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot hybrid"></div>
+                    <span>Hybrid (LLM + Verification)</span>
+                </div>
+            </div>
+            
+            <div class="dag-grid">
+                <div class="phase">
+                    <div class="phase-header">Phase I: Registration</div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S1</span>Statement Parsing<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S2</span>Initial Classification<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node rule">
+                        <span class="node-id">S3</span>Urgency Eval<span class="node-type rule">RULE</span>
+                    </div>
+                </div>
+                
+                <div class="phase">
+                    <div class="phase-header">Phase II: Evidence</div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S4</span>Chat Parsing<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node rule">
+                        <span class="node-id">S5</span>Transaction Parse<span class="node-type rule">RULE</span>
+                    </div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S6</span>APP Analysis<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node rule">
+                        <span class="node-id">S7</span>Call Records<span class="node-type rule">RULE</span>
+                    </div>
+                    <div class="dag-node rule">
+                        <span class="node-id">S8</span>PII Scan<span class="node-type rule">RULE</span>
+                    </div>
+                </div>
+                
+                <div class="phase">
+                    <div class="phase-header">Phase III: Analysis</div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S9</span>Precise Classification<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node hybrid">
+                        <span class="node-id">S10</span>Entity Extraction<span class="node-type hybrid">HYBRID</span>
+                    </div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S11</span>Fund Tracing<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S12</span>Timeline Analysis<span class="node-type llm">LLM</span>
+                    </div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S13</span>Scheme Profile<span class="node-type llm">LLM</span>
+                    </div>
+                </div>
+                
+                <div class="phase">
+                    <div class="phase-header">Phase IV: QA</div>
+                    <div class="dag-node hybrid">
+                        <span class="node-id">S14</span>Quality Check<span class="node-type hybrid">HYBRID</span>
+                    </div>
+                </div>
+                
+                <div class="phase">
+                    <div class="phase-header">Phase V: Report</div>
+                    <div class="dag-node llm">
+                        <span class="node-id">S15</span>Structured Report<span class="node-type llm">LLM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Metrics -->
+        <div class="metrics-section">
+            <div class="metric-card">
+                <div class="metric-value">97%</div>
+                <div class="metric-label">Task Quality</div>
+                <div class="metric-sublabel">vs 100% full disclosure</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">38%</div>
+                <div class="metric-label">Info Exposure</div>
+                <div class="metric-sublabel">vs 100% baseline</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">62%</div>
+                <div class="metric-label">Reduction</div>
+                <div class="metric-sublabel">Privacy leakage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Cost Saved</div>
+                <div class="metric-sublabel">vs HuggingGPT</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">Information Minimization Principle | I(M;Y) Maximized | I(M;PII) Minimized</p>
+        </div>
+    </div>
+</body>
+</html>
