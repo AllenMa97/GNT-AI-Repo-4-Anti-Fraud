@@ -186,9 +186,9 @@ MIT License.
 
 ---
 
-# SOP-DAG：面向敏感领域的隐私感知任务分解框架
+# SOP-DAG：面向敏感领域的隐私感知任务分解框架 {#chinese-version}
 
-> **英文版** | [中文版本](#中文版本) (当前页面)
+> **英文版** | [中文版本](#chinese-version) (当前页面)
 >
 > **投稿状态**：ACL / EMNLP / NAACL
 > **代码与数据**：`https://github.com/AllenMa97/GNT-AI-Repo-4-Anti-Fraud`

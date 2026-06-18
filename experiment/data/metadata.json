@@ -1,0 +1,53 @@
+{
+  "dataset_name": "Chinese Telecom Fraud Synthetic Dataset",
+  "version": "1.0",
+  "generated_at": "2026-06-18 14:04:06",
+  "total_cases": 45,
+  "fraud_types": {
+    "1": {
+      "name": "刷单返利",
+      "count": 5
+    },
+    "2": {
+      "name": "虚假投资",
+      "count": 5
+    },
+    "3": {
+      "name": "杀猪盘",
+      "count": 5
+    },
+    "4": {
+      "name": "冒充客服",
+      "count": 5
+    },
+    "5": {
+      "name": "虚假贷款",
+      "count": 5
+    },
+    "6": {
+      "name": "冒充公检法",
+      "count": 5
+    },
+    "7": {
+      "name": "冒充熟人",
+      "count": 5
+    },
+    "8": {
+      "name": "中奖诈骗",
+      "count": 5
+    },
+    "9": {
+      "name": "虚拟货币杀猪盘",
+      "count": 5
+    }
+  },
+  "data_sources": {
+    "Layer0": "MSRA-NER (微软亚洲研究院中文NER数据集)",
+    "Layer1": "公安部《电信网络诈骗及其关联违法犯罪分类细化（试行）》",
+    "Layer2": "中文实体Schema（融合MSRA-NER+金融/通讯领域知识）",
+    "Layer3": "混合生成（规则+模式匹配）"
+  },
+  "generation_methodology": "基于真实公开数据集的中文实体模式，非完全虚构",
+  "reproducibility": "固定seed=42，所有随机均可复现",
+  "pii_note": "所有姓名/手机号/银行卡/身份证均为虚构合成，仅格式符合真实格式"
+}
